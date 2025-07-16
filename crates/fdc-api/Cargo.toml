@@ -12,3 +12,65 @@ categories.workspace = true
 rust-version.workspace = true
 
 [dependencies]
+# 核心依赖
+fdc-core = { path = "../fdc-core" }
+fdc-query = { path = "../fdc-query" }
+fdc-ingestion = { path = "../fdc-ingestion" }
+fdc-types = { path = "../fdc-types" }
+
+# Web框架
+axum = "0.7"
+tower = "0.4"
+tower-http = { version = "0.5", features = ["cors", "trace"] }
+hyper = "1.0"
+
+# gRPC支持
+tonic = "0.10"
+prost = "0.12"
+tonic-reflection = "0.10"
+
+# GraphQL支持
+async-graphql = "7.0"
+async-graphql-axum = "7.0"
+
+# WebSocket支持
+tokio-tungstenite = "0.20"
+
+# 异步运行时
+tokio = { version = "1.0", features = ["full"] }
+tokio-util = "0.7"
+futures = "0.3"
+async-trait = "0.1"
+
+# 序列化
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# 日志和监控
+tracing = "0.1"
+tracing-subscriber = "0.3"
+metrics = "0.21"
+
+# 错误处理
+thiserror = "1.0"
+anyhow = "1.0"
+
+# 时间处理
+chrono = { version = "0.4", features = ["serde"] }
+
+# UUID生成
+uuid = { version = "1.0", features = ["v4", "serde"] }
+
+# 配置
+config = "0.13"
+toml = "0.8"
+
+# 系统信息
+num_cpus = "1.16"
+
+[dev-dependencies]
+tempfile = "3.8"
+criterion = "0.5"
+
+[build-dependencies]
+tonic-build = "0.10"

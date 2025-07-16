@@ -12,3 +12,60 @@ categories.workspace = true
 rust-version.workspace = true
 
 [dependencies]
+# 核心依赖
+fdc-core = { path = "../fdc-core" }
+fdc-query = { path = "../fdc-query" }
+fdc-types = { path = "../fdc-types" }
+
+# 异步运行时
+tokio = { version = "1.0", features = ["full"] }
+tokio-util = "0.7"
+futures = "0.3"
+async-trait = "0.1"
+
+# 序列化
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+# 数学和统计
+nalgebra = "0.32"
+statrs = "0.16"
+ndarray = "0.15"
+
+# 机器学习 (简化实现，暂时不使用candle)
+# candle-core = "0.3"
+# candle-nn = "0.3"
+
+# 流处理
+tokio-stream = "0.1"
+
+# 时间处理
+chrono = { version = "0.4", features = ["serde"] }
+
+# 错误处理
+thiserror = "1.0"
+anyhow = "1.0"
+
+# 日志和监控
+tracing = "0.1"
+metrics = "0.21"
+
+# 并发和同步
+crossbeam = "0.8"
+dashmap = "5.5"
+parking_lot = "0.12"
+
+# UUID生成
+uuid = { version = "1.0", features = ["v4", "serde"] }
+
+# 配置
+config = "0.13"
+toml = "0.8"
+
+# 系统信息
+num_cpus = "1.16"
+
+[dev-dependencies]
+tempfile = "3.8"
+criterion = "0.5"
+proptest = "1.4"
