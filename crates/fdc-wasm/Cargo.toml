@@ -10,5 +10,51 @@ documentation.workspace = true
 keywords.workspace = true
 categories.workspace = true
 rust-version.workspace = true
+description = "WASM plugin system for Financial Data Center"
 
 [dependencies]
+# 核心依赖
+fdc-core = { path = "../fdc-core" }
+
+# WASM运行时
+wasmtime = { workspace = true }
+wasmtime-wasi = { workspace = true }
+wasm-bindgen = { workspace = true }
+
+# 序列化
+serde = { workspace = true }
+serde_json = { workspace = true }
+bincode = { workspace = true }
+
+# 异步运行时
+tokio = { workspace = true }
+futures = { workspace = true }
+
+# 错误处理
+anyhow = { workspace = true }
+thiserror = { workspace = true }
+
+# 日志
+tracing = { workspace = true }
+
+# 并发
+parking_lot = { workspace = true }
+crossbeam = { workspace = true }
+dashmap = { workspace = true }
+
+# 时间
+chrono = { workspace = true }
+
+# 文件系统
+notify = "6.1"
+
+# TOML解析
+toml = "0.8"
+
+# UUID生成
+uuid = { workspace = true }
+
+[dev-dependencies]
+tokio = { workspace = true, features = ["test-util"] }
+criterion = { workspace = true }
+tempfile = "3.8"

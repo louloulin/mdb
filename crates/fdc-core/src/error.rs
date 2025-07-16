@@ -203,6 +203,11 @@ impl Error {
             operation: operation.into(),
         }
     }
+
+    /// 创建IO错误
+    pub fn io(source: std::io::Error) -> Self {
+        Self::Io { source }
+    }
     
     /// 创建资源耗尽错误
     pub fn resource_exhausted(resource: impl Into<String>) -> Self {

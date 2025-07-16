@@ -10,5 +10,47 @@ documentation.workspace = true
 keywords.workspace = true
 categories.workspace = true
 rust-version.workspace = true
+description = "Custom type system for Financial Data Center"
 
 [dependencies]
+# 核心依赖
+fdc-core = { path = "../fdc-core" }
+fdc-wasm = { path = "../fdc-wasm" }
+
+# 序列化
+serde = { workspace = true }
+serde_json = { workspace = true }
+bincode = { workspace = true }
+
+# 错误处理
+anyhow = { workspace = true }
+thiserror = { workspace = true }
+
+# 日志
+tracing = { workspace = true }
+
+# 并发
+parking_lot = { workspace = true }
+dashmap = { workspace = true }
+
+# 时间
+chrono = { workspace = true }
+
+# UUID生成
+uuid = { workspace = true }
+
+# 正则表达式
+regex = { workspace = true }
+
+# 数学计算
+num-traits = "0.2"
+num-bigint = "0.4"
+rust_decimal = "1.33"
+
+# 编译时计算
+const_format = "0.2"
+
+[dev-dependencies]
+tokio = { workspace = true, features = ["test-util"] }
+criterion = { workspace = true }
+tempfile = "3.8"

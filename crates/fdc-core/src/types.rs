@@ -233,7 +233,7 @@ impl Default for TypeId {
 }
 
 /// 支持动态类型的值
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub enum Value {
     // 基础类型
     Null,
@@ -265,7 +265,7 @@ pub enum Value {
 }
 
 /// 自定义值类型
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct CustomValue {
     pub type_id: TypeId,
     pub data: Vec<u8>,

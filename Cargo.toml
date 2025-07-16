@@ -92,6 +92,7 @@ decimal = "2.1"
 chrono = { version = "0.4", features = ["serde"] }
 uuid = { version = "1.0", features = ["v4", "serde"] }
 rust_decimal = { version = "1.36", features = ["serde-with-arbitrary-precision"] }
+regex = "1.10"
 
 # 高精度数值计算
 num-bigint = "0.4"
