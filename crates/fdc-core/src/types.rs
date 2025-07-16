@@ -264,6 +264,91 @@ pub enum Value {
     Custom(CustomValue),
 }
 
+impl PartialOrd for Value {
+    fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
+        use std::cmp::Ordering;
+
+        match (self, other) {
+            (Value::Null, Value::Null) => Some(Ordering::Equal),
+            (Value::Null, _) => Some(Ordering::Less),
+            (_, Value::Null) => Some(Ordering::Greater),
+
+            (Value::Bool(a), Value::Bool(b)) => a.partial_cmp(b),
+            (Value::Int8(a), Value::Int8(b)) => a.partial_cmp(b),
+            (Value::Int16(a), Value::Int16(b)) => a.partial_cmp(b),
+            (Value::Int32(a), Value::Int32(b)) => a.partial_cmp(b),
+            (Value::Int64(a), Value::Int64(b)) => a.partial_cmp(b),
+            (Value::Int128(a), Value::Int128(b)) => a.partial_cmp(b),
+            (Value::UInt8(a), Value::UInt8(b)) => a.partial_cmp(b),
+            (Value::UInt16(a), Value::UInt16(b)) => a.partial_cmp(b),
+            (Value::UInt32(a), Value::UInt32(b)) => a.partial_cmp(b),
+            (Value::UInt64(a), Value::UInt64(b)) => a.partial_cmp(b),
+            (Value::UInt128(a), Value::UInt128(b)) => a.partial_cmp(b),
+            (Value::Float32(a), Value::Float32(b)) => a.partial_cmp(b),
+            (Value::Float64(a), Value::Float64(b)) => a.partial_cmp(b),
+            (Value::String(a), Value::String(b)) => a.partial_cmp(b),
+            (Value::Binary(a), Value::Binary(b)) => a.partial_cmp(b),
+            (Value::Timestamp(a), Value::Timestamp(b)) => a.partial_cmp(b),
+            (Value::Decimal(a), Value::Decimal(b)) => a.partial_cmp(b),
+
+            // 数值类型之间的比较（简化版本）
+            (Value::Int32(a), Value::Int64(b)) => (*a as i64).partial_cmp(b),
+            (Value::Int64(a), Value::Int32(b)) => a.partial_cmp(&(*b as i64)),
+            (Value::Int32(a), Value::Float64(b)) => (*a as f64).partial_cmp(b),
+            (Value::Float64(a), Value::Int32(b)) => a.partial_cmp(&(*b as f64)),
+
+            // 对于不同类型或复杂类型，按类型顺序排序
+            _ => {
+                let self_type_order = self.type_order();
+                let other_type_order = other.type_order();
+                self_type_order.partial_cmp(&other_type_order)
+            }
+        }
+    }
+}
+
+impl Value {
+    fn type_order(&self) -> u8 {
+        match self {
+            Value::Null => 0,
+            Value::Bool(_) => 1,
+            Value::Int8(_) => 2,
+            Value::Int16(_) => 3,
+            Value::Int32(_) => 4,
+            Value::Int64(_) => 5,
+            Value::Int128(_) => 6,
+            Value::UInt8(_) => 7,
+            Value::UInt16(_) => 8,
+            Value::UInt32(_) => 9,
+            Value::UInt64(_) => 10,
+            Value::UInt128(_) => 11,
+            Value::Float32(_) => 12,
+            Value::Float64(_) => 13,
+            Value::Decimal(_) => 14,
+            Value::String(_) => 15,
+            Value::Binary(_) => 16,
+            Value::Timestamp(_) => 17,
+            Value::Array(_) => 18,
+            Value::List(_) => 19,
+            Value::Struct(_) => 20,
+            Value::Map(_) => 21,
+            Value::Price(_) => 22,
+            Value::Volume(_) => 23,
+            Value::Symbol(_) => 24,
+            Value::ExchangeId(_) => 25,
+            Value::Custom(_) => 26,
+        }
+    }
+}
+
+impl Ord for Value {
+    fn cmp(&self, other: &Self) -> std::cmp::Ordering {
+        self.partial_cmp(other).unwrap_or(std::cmp::Ordering::Equal)
+    }
+}
+
+impl Eq for Value {}
+
 /// 自定义值类型
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct CustomValue {
