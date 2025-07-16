@@ -208,7 +208,14 @@ impl Error {
     pub fn io(source: std::io::Error) -> Self {
         Self::Io { source }
     }
-    
+
+    /// 创建压缩错误
+    pub fn compression(message: impl Into<String>) -> Self {
+        Self::Internal {
+            message: format!("Compression error: {}", message.into()),
+        }
+    }
+
     /// 创建资源耗尽错误
     pub fn resource_exhausted(resource: impl Into<String>) -> Self {
         Self::ResourceExhausted {

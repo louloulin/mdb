@@ -10,5 +10,67 @@ documentation.workspace = true
 keywords.workspace = true
 categories.workspace = true
 rust-version.workspace = true
+description = "Multi-engine storage system for Financial Data Center"
 
 [dependencies]
+# 核心依赖
+fdc-core = { path = "../fdc-core" }
+fdc-types = { path = "../fdc-types" }
+fdc-wasm = { path = "../fdc-wasm" }
+
+# 序列化
+serde = { workspace = true }
+serde_json = { workspace = true }
+bincode = { workspace = true }
+
+# 错误处理
+anyhow = { workspace = true }
+thiserror = { workspace = true }
+
+# 日志
+tracing = { workspace = true }
+
+# 异步运行时
+tokio = { workspace = true }
+futures = { workspace = true }
+async-trait = { workspace = true }
+
+# 并发
+parking_lot = { workspace = true }
+dashmap = { workspace = true }
+crossbeam = { workspace = true }
+
+# 时间
+chrono = { workspace = true }
+
+# UUID生成
+uuid = { workspace = true }
+
+# 数据库引擎
+redb = "2.1"
+duckdb = { version = "1.0", features = ["bundled"] }
+rocksdb = "0.22"
+
+# Apache Arrow
+arrow = "53.0"
+arrow-flight = "53.0"
+parquet = "53.0"
+
+# 压缩
+lz4_flex = "0.11"
+zstd = "0.13"
+
+# 内存映射
+memmap2 = "0.9"
+
+# 哈希
+ahash = "0.8"
+xxhash-rust = { version = "0.8", features = ["xxh3"] }
+
+# 数学计算
+num-traits = "0.2"
+
+[dev-dependencies]
+tokio = { workspace = true, features = ["test-util", "macros"] }
+criterion = { workspace = true }
+tempfile = "3.8"
