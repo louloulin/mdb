@@ -1,0 +1,140 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/fdc-core",
+    "crates/fdc-storage", 
+    "crates/fdc-query",
+    "crates/fdc-ingestion",
+    "crates/fdc-api",
+    "crates/fdc-analytics",
+    "crates/fdc-wasm",        # WASM插件系统
+    "crates/fdc-types",       # 自定义类型系统
+    "crates/fdc-transform",   # 数据转换引擎
+    "crates/fdc-common",
+    "crates/fdc-proto",
+    "crates/fdc-cli",
+    "crates/fdc-server",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+authors = ["Financial Data Center Team"]
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/financial-data-center/mdb"
+homepage = "https://github.com/financial-data-center/mdb"
+documentation = "https://docs.rs/financial-data-center"
+keywords = ["database", "financial", "trading", "wasm", "high-frequency"]
+categories = ["database", "finance", "wasm"]
+rust-version = "1.75"
+
+[workspace.dependencies]
+# 数据处理核心
+arrow = "53.0"
+arrow-flight = "53.0"
+datafusion = "43.0"
+polars = { version = "0.44", features = ["lazy", "sql", "streaming"] }
+
+# 存储引擎
+redb = "2.1"
+rocksdb = "0.22"
+duckdb = { version = "1.1", features = ["bundled"] }
+
+# WASM运行时
+wasmtime = { version = "26.0", features = ["component-model", "async"] }
+wasmtime-wasi = "26.0"
+wasm-bindgen = "0.2"
+js-sys = "0.3"
+web-sys = "0.3"
+
+# 多语言WASM支持
+wit-bindgen = "0.33"
+wit-component = "0.220"
+
+# 异步运行时
+tokio = { version = "1.40", features = ["full"] }
+tokio-util = "0.7"
+futures = "0.3"
+
+# 序列化
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+bincode = "1.3"
+prost = "0.13"
+rmp-serde = "1.3"  # MessagePack支持
+
+# 网络和API
+axum = "0.7"
+tonic = "0.12"
+async-graphql = "7.0"
+tokio-tungstenite = "0.24"
+
+# 性能优化
+rayon = "1.10"
+crossbeam = "0.8"
+parking_lot = "0.12"
+dashmap = "6.0"
+simd-json = "0.13"  # SIMD JSON解析
+
+# 自定义类型支持
+schemars = "0.8"     # JSON Schema生成
+typetag = "0.2"      # 动态类型支持
+erased-serde = "0.4" # 类型擦除序列化
+
+# 监控和日志
+tracing = "0.1"
+tracing-subscriber = "0.3"
+metrics = "0.23"
+prometheus = "0.13"
+
+# 数学和算法
+decimal = "2.1"
+chrono = { version = "0.4", features = ["serde"] }
+uuid = { version = "1.0", features = ["v4", "serde"] }
+rust_decimal = { version = "1.36", features = ["serde-with-arbitrary-precision"] }
+
+# 高精度数值计算
+num-bigint = "0.4"
+num-rational = "0.4"
+num-complex = "0.4"
+
+# 配置管理
+config = "0.14"
+clap = { version = "4.0", features = ["derive"] }
+
+# 测试和基准
+criterion = "0.5"
+proptest = "1.0"
+quickcheck = "1.0"  # 属性测试
+
+# 安全和沙箱
+seccomp = "0.4"     # 系统调用过滤
+landlock = "0.4"    # 文件系统访问控制
+
+# 错误处理
+anyhow = "1.0"
+thiserror = "1.0"
+
+# 内存管理
+bumpalo = "3.16"    # 内存池分配器
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+panic = "abort"
+
+[profile.dev]
+opt-level = 0
+debug = true
+overflow-checks = true
+
+[profile.bench]
+opt-level = 3
+lto = true
+codegen-units = 1
+debug = false
+
+[profile.test]
+opt-level = 1
+debug = true
